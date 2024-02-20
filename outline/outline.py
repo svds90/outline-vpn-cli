@@ -1,6 +1,9 @@
 import requests
-from typing import Any, Dict, Optional
-from exceptions import *
+from typing import Any, Optional
+from exceptions import (
+    OutlinePortError, OutlineTelemetryError, OutlineInvalidName,
+    OutlineInvalidHostname, OutlineInvalidAccessKey, OutlineInvalidDataLimit,
+)
 
 
 class OutlineBase:
