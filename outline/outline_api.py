@@ -1,6 +1,6 @@
 import requests
 from typing import Any, Optional
-from exceptions import (
+from .exceptions import (
     OutlinePortError, OutlineTelemetryError, OutlineInvalidName,
     OutlineInvalidHostname, OutlineInvalidAccessKey, OutlineInvalidDataLimit,
 )
@@ -240,7 +240,7 @@ class OutlineClient(OutlineBase):
             raise OutlineInvalidDataLimit(r.status_code)
 
 
-class Outline(OutlineBase):
+class OutlineVPN(OutlineBase):
     def __init__(self, outline_api_url):
         self.server = OutlineServer(outline_api_url)
         self.client = OutlineClient(outline_api_url)

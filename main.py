@@ -1,8 +1,7 @@
 import argparse
-import os
+from modules.json_handler import JSONHandler
+from outline.outline_api import OutlineVPN
 
-from outline.outline import Outline
-
-outline = Outline(os.getenv("VPN_API_URL"))
-
-print(outline.server.server_info())
+cfg_handler = JSONHandler()
+parser = argparse.ArgumentParser()
+parser.add_argument("outline_api_url", type=str, help="Outline API URL")
