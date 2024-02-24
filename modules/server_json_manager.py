@@ -17,14 +17,14 @@ class JSONHandler(Singleton):
     """
 
     def __init__(self):
-        self.servers_dict = self.__load_json()
+        self.__servers_dict = self.__load_json()
 
     def __load_json(self) -> dict:
         """
         Loads server data from the servers.json file and returns it as a dictionary.
         """
         try:
-            with open('servers.json', 'r') as file:
+            with open('../servers.json', 'r') as file:
                 data = json.load(file)
         except (FileNotFoundError, json.decoder.JSONDecodeError):
             data = {}
@@ -36,23 +36,23 @@ class JSONHandler(Singleton):
         Updates server data in the servers.json file.
         """
         if updates:
-            self.servers_dict.update(updates)
+            self.__servers_dict.update(updates)
 
-        with open('servers.json', 'w') as file:
-            json.dump(self.servers_dict, file, indent=2)
+        with open('../servers.json', 'w') as file:
+            json.dump(self.__servers_dict, file, indent=2)
 
     def get_servers(self) -> dict:
         """
         Returns all servers.
         """
-        return self.servers_dict
+        return self.__servers_dict
 
     def get_server(self, id: str) -> Optional[dict]:
         """
         Returns server with the specified identifier.
         """
-        if id in self.servers_dict:
-            return self.servers_dict[id]
+        if id in self.__servers_dict:
+            return self.__servers_dict[id]
         else:
             return None
 
@@ -67,9 +67,9 @@ class JSONHandler(Singleton):
         """
         Renames the server with th specified id.
         """
-        if id in self.servers_dict:
-            outline_api_url = self.servers_dict[id]
-            del self.servers_dict[id]
+        if id in self.__servers_dict:
+            outline_api_url = self.__servers_dict[id]
+            del self.__servers_dict[id]
             updates = {new_id: outline_api_url}
             self.__update_json(updates)
 
@@ -77,6 +77,6 @@ class JSONHandler(Singleton):
         """
         Deletes the server with th specified id.
         """
-        if id in self.servers_dict:
-            del self.servers_dict[id]
+        if id in self.__servers_dict:
+            del self.__servers_dict[id]
             self.__update_json()
