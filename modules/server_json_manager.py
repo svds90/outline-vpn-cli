@@ -11,7 +11,7 @@ class Singleton:
         return cls._instance
 
 
-class JSONHandler(Singleton):
+class JSONManager(Singleton):
     """
     Provides an interface for working with server data stored in the servers.json file.
     """
@@ -24,7 +24,7 @@ class JSONHandler(Singleton):
         Loads server data from the servers.json file and returns it as a dictionary.
         """
         try:
-            with open('../servers.json', 'r') as file:
+            with open('servers.json', 'r') as file:
                 data = json.load(file)
         except (FileNotFoundError, json.decoder.JSONDecodeError):
             data = {}
@@ -38,7 +38,7 @@ class JSONHandler(Singleton):
         if updates:
             self.__servers_dict.update(updates)
 
-        with open('../servers.json', 'w') as file:
+        with open('servers.json', 'w') as file:
             json.dump(self.__servers_dict, file, indent=2)
 
     def get_servers(self) -> dict:
