@@ -3,3 +3,5 @@
 __pycache__/
 .example.txt
 todo.txt
+t.txt
+.servers.json

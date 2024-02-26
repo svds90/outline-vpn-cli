@@ -25,7 +25,6 @@ class OutlineBase:
 class OutlineServerInfo(OutlineBase):
 
     def __init__(self, server_info: Any):
-        print('==========init OutlineServerInfo')
         self.key: str = server_info.get('server_key', "")
         self.name: str = server_info.get('name', 'Outline server')
         self.id: str = server_info.get('serverId', "")
@@ -43,7 +42,6 @@ class OutlineServerInfo(OutlineBase):
 class OutlineClientInfo(OutlineBase):
 
     def __init__(self, user_info={}):
-        print('==========init OutlineClientInfo')
         self.id: Optional[str] = user_info.get('id', None)
         self.name: str = user_info.get('name', "")
         self.password: str = user_info.get('password', "")
@@ -62,7 +60,6 @@ class OutlineServer(OutlineBase):
     """
 
     def __init__(self, outline_api_url: str):
-        print('==========init OutlineServer')
         self.outline_api_url = outline_api_url
         self.server_info = OutlineServerInfo(self.__fetch_server_info(outline_api_url))
 
@@ -158,7 +155,6 @@ class OutlineServer(OutlineBase):
 class OutlineClient(OutlineBase):
 
     def __init__(self, outline_api_url: str):
-        print('==========init OutlineClient')
         self.outline_api_url = outline_api_url
         self.client_info = OutlineClientInfo()
 
@@ -245,6 +241,5 @@ class OutlineClient(OutlineBase):
 
 class OutlineVPN(OutlineBase):
     def __init__(self, outline_api_url):
-        print('==========init OutlineVPN')
         self.server = OutlineServer(outline_api_url)
         self.client = OutlineClient(outline_api_url)
