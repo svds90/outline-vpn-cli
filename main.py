@@ -1,9 +1,8 @@
-from cli_handlers import json_handler
-from cli_handlers import outline_handler
+from cli_handlers.cli_parser import cli_parser
 
 
 def main():
-    outline_handler.get_info()
+    cli_parser()
 
 
 if __name__ == "__main__":

@@ -4,7 +4,6 @@ from tabulate import tabulate
 from modules.server_json_manager import JSONManager
 from outline.outline_api import OutlineVPN
 
-json_handler = JSONManager()
 metrics_columns = ['ID', 'Transferred data']
 
 
@@ -12,18 +11,36 @@ def init_outline_api(outline_api_url):
     return OutlineVPN(outline_api_url)
 
 
-def bytes_to_gb(data_dict):
-
-    data_in_gb = {}
-    for key, value in data_dict:
-        value = str(round(value / (1000 ** 3), 2))
-        data_in_gb[key] = value
-    return data_in_gb
-
-
 @click.group()
 def cli_parser():
+    """
+    Main group for all click commands
+    """
     pass
+
+
+@cli_parser.command(name='add')
+@click.option('--server', '-s', 'server_id', required=True, help='Server ID')
+@click.option('--new-key', 'key', is_flag=True, help='Create new key')
+def add_command(server_id, key):
+
+    json_handler = JSONManager()
+    outline = init_outline_api(json_handler.get_server(server_id))
+
+    if server_id and key:
+        outline.client.create_key()
+
+
+@cli_parser.command(name='del')
+@click.option('--server', '-s', 'server_id', required=True, help='Server ID')
+@click.option('--remove-key', '-r', 'key_id', metavar='ID', help='Remove key')
+def del_command(server_id, key_id):
+
+    json_handler = JSONManager()
+    outline = init_outline_api(json_handler.get_server(server_id))
+
+    if server_id and key_id:
+        outline.client.delete_key(str(key_id))
 
 
 @cli_parser.command(name='get')
@@ -34,6 +51,7 @@ def cli_parser():
 @click.option('--metrics', '-m', is_flag=True, help='Get metrics')
 def get_command(server_id, key_id, keys, telemetry, metrics):
 
+    json_handler = JSONManager()
     outline = init_outline_api(json_handler.get_server(server_id))
 
     if server_id and key_id and metrics:
@@ -63,6 +81,7 @@ def get_command(server_id, key_id, keys, telemetry, metrics):
 @click.option('--global-limit', 'limit', metavar='BYTES/"OFF"', help='Set global data limit')
 def set_command(server_id, hostname, name, port, id_name, key_limit, limit):
 
+    json_handler = JSONManager()
     outline = init_outline_api(json_handler.get_server(server_id))
 
     if server_id and name:
@@ -94,6 +113,8 @@ def set_command(server_id, hostname, name, port, id_name, key_limit, limit):
 @click.option('--name', '-n', 'name', nargs=2, metavar='ID NEW_ID', help='Renames server')
 @click.option('--remove', '-r', 'remove', metavar='ID', help='Remove server')
 def edit_json(list, url, add, name, remove):
+    json_handler = JSONManager()
+
     if list:
         click.echo(json_handler.get_servers())
     elif url:
@@ -108,27 +129,10 @@ def edit_json(list, url, add, name, remove):
         json_handler.delete_server(remove)
 
 
-@cli_parser.command(name='del')
-@click.option('--server', '-s', 'server_id', required=True, help='Server ID')
-@click.option('--remove-key', '-r', 'key_id', metavar='ID', help='Remove key')
-def del_command(server_id, key_id):
+def bytes_to_gb(data_dict):
 
-    outline = init_outline_api(json_handler.get_server(server_id))
-
-    if server_id and key_id:
-        outline.client.delete_key(str(key_id))
-
-
-@cli_parser.command(name='add')
-@click.option('--server', '-s', 'server_id', required=True, help='Server ID')
-@click.option('--new-key', 'key', is_flag=True, help='Create new key')
-def add_command(server_id, key):
-
-    outline = init_outline_api(json_handler.get_server(server_id))
-
-    if server_id and key:
-        outline.client.create_key()
-
-
-if __name__ == "__main__":
-    cli_parser()
+    data_in_gb = {}
+    for key, value in data_dict:
+        value = str(round(value / (1000 ** 3), 2))
+        data_in_gb[key] = value
+    return data_in_gb
