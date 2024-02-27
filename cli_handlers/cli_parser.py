@@ -1,4 +1,5 @@
 import click
+from pprint import pprint
 from tabulate import tabulate
 
 from modules.server_json_manager import JSONManager
@@ -55,18 +56,32 @@ def get_command(server_id, key_id, keys, telemetry, metrics):
     outline = init_outline_api(json_handler.get_server(server_id))
 
     if server_id and key_id and metrics:
-        click.echo(outline.client.get_all_metrics()[
-            'bytesTransferredByUserId'][str(key_id)])
+        res = outline.client.get_all_metrics()['bytesTransferredByUserId'][str(key_id)]
+        _dict = {f"{key_id}": f"{round(res / (1000 ** 3), 2)}"}
+        click.echo(tabulate(_dict.items(), headers=metrics_columns, tablefmt='rst'))
+
     elif server_id and keys and metrics:
         click.echo(tabulate(bytes_to_gb(outline.client.get_all_metrics()[
                    'bytesTransferredByUserId'].items()).items(), headers=metrics_columns, tablefmt='rst'))
+
     elif server_id and keys:
-        click.echo(outline.client.get_all_keys())
+        res = outline.client.get_all_keys()['accessKeys']
+
+        for item in res:
+            click.echo(f"\n{tabulate(item.items(), tablefmt='plain')}")
+
     elif server_id and key_id:
         outline.client.get_key(key_id)
-        click.echo(outline.client.client_info())
+        click.echo(f"\n{tabulate(outline.client.client_info().items(), tablefmt='plain')}")
+
     elif server_id and telemetry:
-        click.echo(outline.server.get_telemetry_status())
+        status = outline.server.get_telemetry_status()
+
+        if status:
+            click.echo(tabulate(dict(Telemetry='ENABLED').items(), tablefmt='rst'))
+        elif not status:
+            click.echo(tabulate(dict(Telemetry='DISABLED').items(), tablefmt='rst'))
+
     elif server_id:
         click.echo(tabulate(outline.server.server_info().items(), tablefmt='rst'))
 
@@ -95,11 +110,14 @@ def set_command(server_id, hostname, name, port, id_name, key_limit, limit):
         outline.client.rename_key(str_id, new_name)
     elif server_id and key_limit:
         key_id, data_limit = key_limit
+
         if data_limit == 'off':
             outline.client.disable_data_limit(key_id)
         else:
             outline.client.set_data_limit(key_id, int(data_limit))
+
     elif server_id and limit:
+
         if limit == 'off':
             outline.server.disable_global_data_limit()
         else:
@@ -116,7 +134,7 @@ def edit_json(list, url, add, name, remove):
     json_handler = JSONManager()
 
     if list:
-        click.echo(json_handler.get_servers())
+        click.echo(tabulate(json_handler.get_servers().items(), tablefmt='rst'))
     elif url:
         click.echo(json_handler.get_server(url))
     elif add:

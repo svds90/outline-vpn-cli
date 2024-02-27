@@ -26,6 +26,7 @@ class OutlineServerInfo(OutlineBase):
 
     def __init__(self, server_info: Any):
         self.key: str = server_info.get('server_key', "")
+        # self.key: str = "HIDDEN"
         self.name: str = server_info.get('name', 'Outline server')
         self.id: str = server_info.get('serverId', "")
         self.metric_status: bool = server_info.get('metricsEnabled', False)
@@ -158,7 +159,7 @@ class OutlineClient(OutlineBase):
         self.outline_api_url = outline_api_url
         self.client_info = OutlineClientInfo()
 
-    def get_all_keys(self):
+    def get_all_keys(self) -> dict:
         """
         Lists the access keys
         """
