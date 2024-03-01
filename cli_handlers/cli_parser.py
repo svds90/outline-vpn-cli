@@ -1,5 +1,5 @@
 import click
-from pprint import pprint
+from datetime import datetime
 from tabulate import tabulate
 
 from modules.server_json_manager import JSONManager
@@ -83,7 +83,7 @@ def get_command(server_id, key_id, keys, telemetry, metrics):
             click.echo(tabulate(dict(Telemetry='DISABLED').items(), tablefmt='rst'))
 
     elif server_id:
-        click.echo(tabulate(outline.server.server_info().items(), tablefmt='rst'))
+        click.echo(tabulate(timestamp_to_date(outline.server.server_info()).items(), tablefmt='rst'))
 
 
 @cli_parser.command(name='set')
@@ -154,3 +154,12 @@ def bytes_to_gb(data_dict):
         value = str(round(value / (1000 ** 3), 2))
         data_in_gb[key] = value
     return data_in_gb
+
+
+def timestamp_to_date(server_info: dict) -> dict:
+    updates = server_info
+
+    updates['created_time'] = f"{datetime.fromtimestamp(
+        updates['created_time'] / 1000).strftime("%d %B %Y, %I:%M:%S %p")}"
+
+    return updates
