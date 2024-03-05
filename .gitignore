@@ -1,8 +1,5 @@
 .venv/
 .env
 __pycache__/
-.example.txt
-todo.txt
-t.txt
 .servers.json
 servers.json
