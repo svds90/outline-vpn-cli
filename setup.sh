@@ -2,6 +2,7 @@
 
 docker pull svds90/outline-vpn-cli:latest
 docker run -dit --name outline-vpn-cli svds90/outline-vpn-cli
+docker stop -t 1 outline-vpn-cli
 
 UNIT_FILE="/etc/systemd/system/outline-vpn-cli.service"
 OUTLINE_SCRIPT="/usr/local/bin/outline"
@@ -28,4 +29,5 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
+systemctl start outline-vpn-cli
 systemctl enable outline-vpn-cli
