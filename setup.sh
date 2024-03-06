@@ -19,7 +19,6 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-Restart=always
 ExecReload=/usr/bin/docker restart -t 1 outline-vpn-cli
 ExecStart=/usr/bin/docker start outline-vpn-cli
 ExecStop=/usr/bin/docker stop -t 2 outline-vpn-cli
