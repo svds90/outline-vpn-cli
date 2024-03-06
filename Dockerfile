@@ -1,6 +1,6 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
 
-RUN adduser -D -h / -s /bin/sh app_user
+RUN useradd --create-home --shell /bin/bash app_user
 
 WORKDIR /home/app_user/outline-cli-app
 
@@ -12,4 +12,4 @@ USER app_user
 
 COPY . .
 
-CMD ["sh"]
+CMD ["bash"]
