@@ -1,7 +1,7 @@
 # outline-vpn-cli
 **outline-vpn-cli**: a dockerized command-line tool for interacting with the Outline VPN API via HTTP requests, designed for managing server configuration and client access keys.
 
-Requires [docker](https://www.docker.com/).
+Requires [docker](https://www.docker.com/)
 
 ## Example
 
@@ -34,7 +34,7 @@ hostname_for_keys  123.123.123.123
 =======  =====================================================
 srv01    https://123.123.123.123:12345/yVeRSGYQkrJHgja849aFOxw
 srv02    https://13.13.13.13:12345/yVeRSGYQkUXcLjja849axw
-srv03    https://18.188.167.34:5778/yVeRSGYQkr49aFOaKiDNxw
+srv03    https://18.188.167.34:5778/yVeRSGYQkrJHgja849aFOxw
 =======  =====================================================
 ```
 
@@ -71,11 +71,18 @@ echo 'docker exec outline-vpn-cli python main.py "\$@"' > /usr/local/bin/outline
 
 You can use abbreviated options instead of flags, refer to --help for details.
 
-- outline json --help
-- outline get --help
-- outline set --help
-- outline add --help
-- outline del --help
+- [outline-vpn-cli](#outline-vpn-cli)
+  - [Example](#example)
+  - [Installation](#installation)
+    - [auto](#auto)
+    - [manually](#manually)
+    - [or](#or)
+  - [Usage](#usage)
+    - [JSON command](#json-command)
+    - [GET command](#get-command)
+    - [SET command](#set-command)
+    - [ADD command](#add-command)
+    - [DEL command](#del-command)
 
 ___
 
