@@ -1,8 +1,10 @@
+<!-- omit in toc -->
 # outline-vpn-cli
 **outline-vpn-cli**: a dockerized command-line tool for interacting with the Outline VPN API via HTTP requests, designed for managing server configuration and client access keys.
 
 Requires [docker](https://www.docker.com/)
 
+<!-- omit in toc -->
 ## Example
 
 ```
@@ -38,14 +40,17 @@ srv03    https://18.188.167.34:5778/yVeRSGYQkrJHgja849aFOxw
 =======  =====================================================
 ```
 
-
+<!-- omit in toc -->
 ## Installation
 
+<!-- omit in toc -->
 ### auto
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/svds90/outline-vpn-cli/master/setup.sh | sudo bash
 ```
+
+<!-- omit in toc -->
 ### manually
 pull image
 ```
@@ -60,29 +65,23 @@ for ease of use, you can create an alias:
 alias outline='docker exec outline-vpn-cli python main.py' >> ~/path/to/aliases or bashrc/zshrc
 ```
 
+<!-- omit in toc -->
 ### or 
 
 script, for instance, in the **/usr/local/bin** (or any other directory with scripts) directory with a name of your choice, such as 'outline'.
 ```
 echo 'docker exec outline-vpn-cli python main.py "\$@"' > /usr/local/bin/outline
 ```
-
+<!-- omit in toc -->
 ## Usage
 
 You can use abbreviated options instead of flags, refer to --help for details.
 
-- [outline-vpn-cli](#outline-vpn-cli)
-  - [Example](#example)
-  - [Installation](#installation)
-    - [auto](#auto)
-    - [manually](#manually)
-    - [or](#or)
-  - [Usage](#usage)
-    - [JSON command](#json-command)
-    - [GET command](#get-command)
-    - [SET command](#set-command)
-    - [ADD command](#add-command)
-    - [DEL command](#del-command)
+- [JSON command](#json-command)
+- [GET command](#get-command)
+- [SET command](#set-command)
+- [ADD command](#add-command)
+- [DEL command](#del-command)
 
 ___
 
