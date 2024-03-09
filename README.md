@@ -2,7 +2,6 @@
 # outline-vpn-cli
 **outline-vpn-cli**: a dockerized command-line tool for interacting with the Outline VPN API via HTTP requests, designed for managing server configuration and client access keys.
 
-Requires [docker](https://www.docker.com/)
 
 <!-- omit in toc -->
 ## Example
